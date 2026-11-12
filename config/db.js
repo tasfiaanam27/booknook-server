@@ -1,6 +1,5 @@
 const dns = require("dns");
 
-// Use Google's DNS to resolve MongoDB SRV records
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
