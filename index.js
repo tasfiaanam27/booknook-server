@@ -19,12 +19,22 @@ app.use(
 
 app.use(express.json());
 
+// API routes
 app.use("/books", booksRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/borrows", borrowsRoutes);
 
+// Server status route
 app.get("/", (req, res) => {
   res.send("BookNook Server is Running!");
+});
+
+// Handle requests to unknown API routes
+app.use((req, res) => {
+  return res.status(404).json({
+    success: false,
+    message: "API route not found.",
+  });
 });
 
 const PORT = process.env.PORT || 5000;
@@ -32,6 +42,7 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await connectDB();
+
     await getDB()
       .collection("borrows")
       .createIndex(
