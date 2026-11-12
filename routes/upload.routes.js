@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const verifyToken = require("../middleware/auth.middleware");
 
 const router = express.Router();
 
@@ -25,7 +26,8 @@ const upload = multer({
   },
 });
 
-router.post("/", (req, res) => {
+// POST: Upload a book cover image (PRIVATE)
+router.post("/", verifyToken, (req, res) => {
   upload.single("image")(req, res, async (uploadError) => {
     if (uploadError) {
       return res.status(400).json({
@@ -97,3 +99,4 @@ router.post("/", (req, res) => {
 });
 
 module.exports = router;
+
