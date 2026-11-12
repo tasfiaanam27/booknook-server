@@ -4,9 +4,9 @@ const express = require("express");
 const cors = require("cors");
 const { connectDB } = require("./config/db");
 const booksRoutes = require("./routes/books.routes");
+const uploadRoutes = require("./routes/upload.routes");
 
 const app = express();
-
 
 // Middleware
 app.use(
@@ -17,7 +17,10 @@ app.use(
 );
 
 app.use(express.json());
+
+// API Routes
 app.use("/books", booksRoutes);
+app.use("/upload", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.send("BookNook Server is Running!");
@@ -39,3 +42,4 @@ const startServer = async () => {
 };
 
 startServer();
+
